@@ -1,42 +1,42 @@
 package lab_3;
 
 public class NonlinearEquation {
-    private double _begin;
-    private double _end;
-    double _eps=1e-8;
+    private double begin;
+    private double end;
 
     public NonlinearEquation(double begin, double end) {
-            _begin = begin;
-            _end = end;
+            this.begin = begin;
+            this.end = end;
     }
 
-    public double get_begin() {
-        return _begin;
+    private double getBegin() {
+        return begin;
     }
 
-    public double get_end() {
-        return _end;
+    private double getEnd() {
+        return end;
     }
 
     private double GetMidPoint() {
-        return (_begin + _end) / 2;
+        return (begin + end) / 2;
     }
     private double GetValue(double x) {
         return(Math.pow(x,3)- (3 * (x * x - 1)));
     }
     public double Solve() {
-        double fBeg = get_begin();
-        double fEnd = get_end();
-        assert (fBeg * fEnd < 0);
-        while (Math.abs(fBeg - fEnd) > _eps) {
+        double functionBegin = getBegin();
+        double functionEnd = getEnd();
+        assert (functionBegin * functionEnd < 0);
+        double eps = 1e-8;
+        while (Math.abs(functionBegin - functionEnd) > eps) {
             double mid = GetMidPoint();
             double fMid = GetValue (mid);
-            if (fMid * fBeg < 0) {
-                _end = mid;
-                fEnd = fMid;
-            } else if (fMid * fEnd < 0) {
-                _begin = mid;
-                fBeg = fMid;
+            if (fMid * functionBegin < 0) {
+                end = mid;
+                functionEnd = fMid;
+            } else if (fMid * functionEnd < 0) {
+                begin = mid;
+                functionBegin = fMid;
             }
         }
         return GetMidPoint();
