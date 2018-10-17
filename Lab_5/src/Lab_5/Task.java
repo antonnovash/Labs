@@ -1,9 +1,11 @@
 package Lab_5;
 
 import java.io.Serializable;
+import java.util.ResourceBundle;
 
-public class Task implements Serializable {
+public class Task extends ObjectWithResourceBundle  implements Serializable {
     private String description;
+    //transient public ResourceBundle resourceBundle = ResourceBundle.getBundle("Base");
 
     public Task(String description) {
 
@@ -22,8 +24,8 @@ public class Task implements Serializable {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "description='" + description + '\'' +
-                '}';
+        return resourceBundle.getString("taskForDescription") +
+                '{' + resourceBundle.getString("description") +
+                '\'' + description + '\'' + '}';
     }
 }

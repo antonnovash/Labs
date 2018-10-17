@@ -1,9 +1,10 @@
 package Lab_5;
 
 import java.io.Serializable;
+import java.util.ResourceBundle;
 
-public class Constructor implements Serializable {
-
+public class Constructor extends ObjectWithResourceBundle  implements Serializable {
+    public static final double COST = 10520.5;
     public Constructor() {
     }
 
@@ -16,14 +17,19 @@ public class Constructor implements Serializable {
             e.printStackTrace();
             System.exit(1);
         }
-        return "The technical task is registered.";
+        return resourceBundle.getString("task");
     }
-    public Invoice coastProject(Task task) {
+    public Invoice costProject(Task task) {
 
-        return new Invoice(task.getDescription().length() * 10520.5);
+        return new Invoice(task.getDescription().length() * COST);
     }
     public Squad[] createSquad(Task task) {
 
         return new Squad[task.getDescription().length()];
+    }
+
+    @Override
+    public String toString() {
+        return resourceBundle.getString("constructor") + " {" + resourceBundle.getString("task") + '}';
     }
 }

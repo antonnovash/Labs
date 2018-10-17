@@ -1,8 +1,9 @@
 package Lab_5;
 
 import java.io.Serializable;
+import java.util.ResourceBundle;
 
-public class Invoice implements Serializable {
+public class Invoice extends ObjectWithResourceBundle implements Serializable {
     private double cost;
 
     public Invoice(double cost) {
@@ -19,8 +20,8 @@ public class Invoice implements Serializable {
 
     @Override
     public String toString() {
-        return "Invoice{" +
-                "cost=" + cost +
-                "$}";
+        return resourceBundle.getString("invoice") + "{ " +
+                resourceBundle.getString("cost")+ '=' + cost +
+                " $ }";
     }
 }

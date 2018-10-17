@@ -3,35 +3,36 @@ package Lab_5;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
-public class Squad implements Serializable {
-    private Squad[] squads;
+public class Squad extends ObjectWithResourceBundle implements Serializable {
+    private Squad[] employee;
     private String name;
-    private Locale locale;
     private Date date;
+    transient public ResourceBundle resourceBundle = ResourceBundle.getBundle("Base");
 
-    public Squad(String name,Locale locale) {
+
+    public Squad(String name, Locale locale) {
         this.name = name;
-        this.locale = locale;
         this.date = new Date();
     }
 
     public Squad(Squad[] squads) {
-        this.squads = squads;
+        this.employee = squads;
     }
 
     public Squad[] getSquads() {
-        return squads;
+        return employee;
     }
 
     public void setSquads(Squad[] squads) {
-        this.squads = squads;
+        this.employee = squads;
     }
 
     @Override
     public String toString() {
-        return "Squad{" +
-                "name='" + name + '\'' +
-                '}'+ " Was created: " + DateLocalFormat.getTimeStyle(date,locale);
+        return resourceBundle.getString("squad") + '{' +
+                resourceBundle.getString("name") + '\'' + name + '\'' +
+                "} " + resourceBundle.getString("wasCreated")+ ": " + DateLocalFormat.getTimeStyle(date,Locale.getDefault());
     }
 }
