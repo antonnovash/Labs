@@ -27,6 +27,8 @@ public class MainWindow extends JFrame {
     private JButton findLow;
     private JButton remove;
     private JTextField Index;
+    private JTextField status;
+    private JToolBar statusBar;
 
 
     public MainWindow() throws ParseException {
@@ -37,18 +39,11 @@ public class MainWindow extends JFrame {
         ArrayList<Record> magazine = new ArrayList<>();
         createArrayList(magazine);
         Map<Object, Long> map = Buffer.write(magazine);
-        //SortedMap sortedMap = new TreeMap(map);
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
-        /*Record firstRecord = new Record("9012AB-1", "Anton Novash", simpleDateFormat.parse("24.10.2018 10:00:00"), simpleDateFormat.parse("30.10.2018 18:00:00"), "250$");
-        Record secondRecord = new Record("1234AB-5", "Anton Novash", simpleDateFormat.parse("22.10.2018 11:00:00"), simpleDateFormat.parse("26.10.2018 11:30:00"), "150$");
-        Record thirdRecord = new Record("5678AB-7", "Artur Ysnov", simpleDateFormat.parse("23.10.2018 12:00:00"), simpleDateFormat.parse("28.10.2018 12:30:00"), "200$");
-        listModel.addElement(firstRecord);
-        listModel.addElement(secondRecord);
-        listModel.addElement(thirdRecord);*/
         for (Record arrayList : magazine) {
             listModel.addElement(arrayList);
+            status.setText("Data added");
         }
 
         submitButton.addActionListener(new AbstractAction() {
@@ -70,6 +65,8 @@ public class MainWindow extends JFrame {
                 }
                 String ratePerHourText = ratePerHour.getText();
                 listModel.addElement(new Record(carNumberText, ownerNameText, dataStartText, dataEndText, ratePerHourText));
+                status.setText("Data added by input");
+
             }
 
         });
@@ -85,6 +82,8 @@ public class MainWindow extends JFrame {
                 int index = Integer.parseInt(Index.getText());
                 Record record = Buffer.findLow(magazine.get(index).getOwnerName(), map);
                 listModel.addElement(record);
+                status.setText("Find Low!");
+
             }
         });
         findUp.addActionListener(new AbstractAction() {
@@ -93,6 +92,7 @@ public class MainWindow extends JFrame {
                 int index = Integer.parseInt(Index.getText());
                 Record record = Buffer.findUp(magazine.get(index).getOwnerName(), map);
                 listModel.addElement(record);
+                status.setText("Find top!");
             }
         });
         remove.addActionListener(new AbstractAction() {
@@ -107,24 +107,17 @@ public class MainWindow extends JFrame {
                         listModel.addElement(Buffer.read(entry.getKey(), map));
                     }
                 }
+                status.setText("Remome by index!");
             }
         });
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
-        JMenu AboutMenu = new JMenu("Status");
-        JMenuItem statusFirstLine = new JMenuItem("\n" +
-                "The program displays a list of car records in the parking place.\n" +
-                " In the File section you can upload and read files.\n");
-        JMenuItem statusSecondLine = new JMenuItem("\n Add to the list, you can add each of the fields. Developed by Anton Novash.");
         JMenuItem load = new JMenuItem("Load");
         JMenuItem save = new JMenuItem("Save");
 
         fileMenu.add(load);
         fileMenu.add(save);
-        AboutMenu.add(statusFirstLine);
-        AboutMenu.add(statusSecondLine);
         menuBar.add(fileMenu);
-        menuBar.add(AboutMenu);
         setJMenuBar(menuBar);
 
         load.addActionListener(new AbstractAction() {
@@ -153,6 +146,7 @@ public class MainWindow extends JFrame {
                 } catch (IOException | ClassNotFoundException e1) {
                     e1.printStackTrace();
                 }
+                status.setText("File load!");
             }
         });
 
@@ -185,6 +179,7 @@ public class MainWindow extends JFrame {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
+                status.setText("File save!");
             }
         });
     }
